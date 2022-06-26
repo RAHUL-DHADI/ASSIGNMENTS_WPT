@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment-1</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    
+
+    <script>
+
+        let arr=[1,2,3,4,5,6,7,8,9];
+
+
+        $(()=>{
+
+           
+            
+            console.log('entered the program successfully');
+
+          //  const txt = document.querySelector('#input');
+            $('#input').blur(()=>{
+
+                console.log('blur event occured');
+                console.log(arr);
+
+                let input=document.querySelector('#input').value;
+
+                let output =forBlur(input);
+                if(output){
+                    $('#edit').prop('disabled',false);
+                    $('#delete').prop('disabled',false);
+                    $('#add').prop('disabled',true);
+                    
+                  
+
+                    $('#msg').text('number present');
+                   
+
+                   
+                }
+                else{
+
+                    $('#add').prop('disabled',false);
+                    $('#msg').text('number not present');
+                    $('#edit').prop('disabled',true);
+                    $('#delete').prop('disabled',true);
+                }
+            })
+
+           // const b1 = document.querySelector('#add');
+           $('#add').click(()=>{
+
+                console.log('add button clicked');
+                let input= document.querySelector('#input').value;
+
+                let output = addFun(input);
+                if(output){
+                    $('#add').prop('disabled',true);
+                    $('#edit').prop('disabled',true);
+                    $('#delete').prop('disabled',true);
+                    $('#view').prop('disabled',true);
+                    $('#odd').prop('disabled',true);
+                    $('#msg').html('already present');
+
+
+                }
+                else{
+
+                    arr.push(input);
+
+                    $('#add').prop('disabled',true);
+                    $('#edit').prop('disabled',true);
+                    $('#delete').prop('disabled',true);
+                    $('#view').prop('disabled',true);
+                    //document.querySelector('#odd').disabled=true;
+                    $('#msg').html('added');
+
+                  
+
+
+                }
+            })
+
+
+            //const b2 = document.querySelector('#edit');
+           $('#edit').click(()=>{
+
+                console.log('edit button clicked');
+                
+
+               
+
+                let input= document.querySelector('#input').value;
+                let input2=prompt();
+                output=forEdit(input,input2);
+
+                if(output){
+
+                    $('#msg').html('number replaced');
+ 
+                }
+                else{
+
+                   $('#msg').html('number is already present');
+
+                }
+
+                
+            })
+
+            //const b3 = document.querySelector('#delete');
+            $('#delete').click(()=>{
+
+                console.log('delete button clicked');
+
+                let input= document.querySelector('#input').value;
+                let output=forDelete(input);
+
+                if(output){
+
+                    
+
+                    $('#msg').html('deleted');
+                }
+                else{
+
+                    $('#msg').html('number not present');
+                }
+            })
+
+           // const b4 = document.querySelector('#view');
+           $('#view').click(()=>{
+
+                console.log('view button clicked');
+                showArray();
+
+                $('#contents').html(arr);
+                $('#msg').html('');
+
+               
+            })
+
+            //const b5 = document.querySelector('#odd');
+            $('#odd').click(()=>{
+
+                console.log(' view odd button clicked');
+                showArrayAtOdd();
+            })
+
+
+            function isPresent(n){
+
+                let output=false;
+
+                for(let i=0;i<arr.length;i++)
+                {
+                    if(arr[i]==n){
+                        output=true;
+                        break;
+                    }
+                }
+
+                return output;
+
+            }
+
+            
+
+           function showArrayInContent(){
+
+                let output1=arr;
+
+                let msg=" ";
+                for(let i=0;i<output1.length;i++){
+                    msg+=output1[i];
+                }
+
+                $('#contents').text(msg);
+            }
+
+           
+
+            function forBlur(n){
+                let output=false;
+                for(let i=0;i<arr.length;i++){
+                    if(arr[i]==n){
+                        output=true;
+                    }
+                }
+                return output;
+            }
+
+            function addFun(n){
+                let output=false;
+                for(let i=0;i<arr.length;i++){
+                    if(arr[i]==n){
+                    output=true;
+                    break;
+                    
+                }
+                return output;
+            } 
+        }
+        function forDelete(n){
+                let output=false;
+                for(let i=0;i<arr.length;i++){
+                    if(arr[i]==n){
+                        arr.splice(i,1)
+                        output=true;
+                    }
+                }
+                return output;
+            }
+
+             function showArray(){
+
+                let output=arr;
+
+                let msg=" ";
+                for(let i=0;i<output.length;i++){
+                    msg+=" "+output[i];
+                }
+
+                
+                $('#msg').text(msg);
+            }
+
+             function showArrayAtOdd(){
+
+                let output=arr;
+
+                let msg=" ";
+                for(let i=0;i<output.length;i+=2){
+                    msg+=" "+output[i];
+                }
+
+                $('#msg').text(msg);
+            }
+
+          
+
+
+            function forEdit(n,m){
+                let output=false;
+
+               if(!isPresent(m)){
+
+                for(let i=0;i<arr.length;i++){
+                    if(arr[i]==n && arr[i]!=m){
+                        
+                        arr.splice(i,1,m);
+                        output=true;
+                    }
+
+                }
+                return output;
+
+             
+            }
+                 } 
+               
+           
+        })
+    </script>
+</head>
+<body>
+    <input type="text" id="input" placeholder="enter the number here">
+    <span id="msg">appropriate message</span><br><br>
+    <button id="add" disabled>add</button>
+    <button id="edit" disabled>edit</button>
+    <button id="delete" disabled>delete</button>
+    <button id="view" >view all</button>
+    <button id="odd" >show odd position</button>
+    <hr>
+    <p id="contents">contents</p>
+</body>
+</html>
